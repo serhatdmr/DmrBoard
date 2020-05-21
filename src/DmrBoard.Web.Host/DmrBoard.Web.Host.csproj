@@ -24,7 +24,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\DmrBoard.Core\DmrBoard.Core.csproj" />
     <ProjectReference Include="..\DmrBoard.EntityFrameworkCore\DmrBoard.EntityFrameworkCore.csproj" />
   </ItemGroup>
 
