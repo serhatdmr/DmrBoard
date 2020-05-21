@@ -1,6 +1,6 @@
 using System;
 
-namespace DmrBoard.Host
+namespace DmrBoard.Web.Host
 {
     public class WeatherForecast
     {
