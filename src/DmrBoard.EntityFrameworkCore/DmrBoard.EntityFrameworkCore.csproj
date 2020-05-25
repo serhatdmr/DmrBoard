@@ -5,13 +5,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Migrations\20200521152641_Init.cs" />
-    <Compile Remove="Migrations\20200521152641_Init.Designer.cs" />
-    <Compile Remove="Migrations\20200521152943_Init.cs" />
-    <Compile Remove="Migrations\20200521152943_Init.Designer.cs" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="3.1.4" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="3.1.4" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="3.1.4">
@@ -27,6 +20,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\DmrBoard.Core\DmrBoard.Core.csproj" />
+    <ProjectReference Include="..\DmrBoard.Domain\DmrBoard.Domain.csproj" />
   </ItemGroup>
 
 </Project>

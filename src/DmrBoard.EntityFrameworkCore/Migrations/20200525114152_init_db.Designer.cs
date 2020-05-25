@@ -3,14 +3,16 @@ using System;
 using DmrBoard.EntityFrameworkCore.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace DmrBoard.EntityFrameworkCore.Migrations
 {
     [DbContext(typeof(DmrDbContext))]
-    partial class DmrDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200525114152_init_db")]
+    partial class init_db
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -75,9 +77,6 @@ namespace DmrBoard.EntityFrameworkCore.Migrations
                     b.Property<bool>("EmailConfirmed")
                         .HasColumnType("INTEGER");
 
-                    b.Property<string>("FirstName")
-                        .HasColumnType("TEXT");
-
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("INTEGER");
 
@@ -111,9 +110,6 @@ namespace DmrBoard.EntityFrameworkCore.Migrations
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("SecurityStamp")
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("SurName")
                         .HasColumnType("TEXT");
 
                     b.Property<bool>("TwoFactorEnabled")

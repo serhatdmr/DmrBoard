@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using DmrBoard.Core.AuditLogs;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -14,7 +15,6 @@ namespace DmrBoard.Web.Host.Middleware
         private readonly RequestDelegate _next;
         private readonly ILogger _logger;
 
-
         public RequestResponseLoggingMiddleware(RequestDelegate next, ILoggerFactory loggerFactory)
         {
             _next = next;
@@ -23,7 +23,8 @@ namespace DmrBoard.Web.Host.Middleware
 
         public async Task Invoke(HttpContext context)
         {
-            _logger.LogInformation(await FormatRequest(context.Request));
+
+            //_logger.LogInformation(await FormatRequest(context.Request));
             await _next(context);
             //var originalBodyStream = context.Response.Body;
 
@@ -31,6 +32,7 @@ namespace DmrBoard.Web.Host.Middleware
             //{
             //    context.Response.Body = responseBody;
             //    await _next(context);
+
             //    string responseText = await FormatResponse(context.Response);
             //    _logger.LogInformation($"Http Response Information:{Environment.NewLine}" +
             //               $"Schema:{context.Request.Scheme} " +
@@ -41,13 +43,14 @@ namespace DmrBoard.Web.Host.Middleware
 
             //    await responseBody.CopyToAsync(originalBodyStream);
             //}
-
         }
 
 
 
         private async Task<string> FormatRequest(HttpRequest request)
         {
+            request.EnableBuffering();
+
             var body = request.Body;
 
             var buffer = new byte[Convert.ToInt32(request.ContentLength)];
