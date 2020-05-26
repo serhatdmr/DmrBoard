@@ -1,4 +1,5 @@
-﻿using DmrBoard.Core.Bus;
+﻿using DmrBoard.Application.Organizations;
+using DmrBoard.Core.Bus;
 using DmrBoard.Core.Domain.Interfaces;
 using DmrBoard.Core.Events;
 using DmrBoard.Core.Interfaces;
@@ -36,6 +37,12 @@ namespace DmrBoard.IoC
             services.AddScoped<IEventStoreRepository, EventStoreRepository>();
 
             services.AddScoped<IUserSession, UserSession>();
+
+
+            #region AppService
+            services.AddScoped<IOrganizationAppService, OrganizationAppService>();
+            #endregion
+
         }
 
     }

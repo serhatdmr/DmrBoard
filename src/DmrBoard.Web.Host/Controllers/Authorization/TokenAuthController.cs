@@ -1,16 +1,15 @@
 ﻿using DmrBoard.Application.Authorization.Dto;
-using DmrBoard.Core.Authorization.Roles;
 using DmrBoard.Core.Authorization.Users;
 using DmrBoard.Core.Bus;
+using DmrBoard.Core.Notifications;
 using DmrBoard.Web.Host.Configurations;
+using MediatR;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using System;
-using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
-using System.Linq;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
@@ -18,7 +17,8 @@ using System.Threading.Tasks;
 namespace DmrBoard.Web.Host.Controllers.Authorization
 {
     [ApiController]
-    [Route("api/[controller]")]
+    [ApiVersion("1.0")]
+    [Route("api/{v:apiVersion}[controller]")]
     public class TokenAuthController : BaseController
     {
         private readonly SignInManager<User> _signInManager;
@@ -26,17 +26,20 @@ namespace DmrBoard.Web.Host.Controllers.Authorization
         public TokenAuthController(UserManager<User> userManager,
             IConfiguration configuration,
             IMediatorHandler mediator,
-            SignInManager<User> signInManager) : base(userManager, configuration, mediator)
+            INotificationHandler<DomainNotification> notification,
+            SignInManager<User> signInManager) : base(userManager, configuration, mediator, notification)
         {
             _signInManager = signInManager;
         }
+
 
         [HttpPost]
         public async Task<IActionResult> Authenticate([FromBody]UserLoginViewModel model)
         {
             if (!ModelState.IsValid)
             {
-                return BadRequest();
+                NotifyModelStateErrors();
+                return Result(model);
             }
 
             var result = await _signInManager.PasswordSignInAsync(model.Email, model.Password, false, true);
@@ -44,15 +47,11 @@ namespace DmrBoard.Web.Host.Controllers.Authorization
             if (result.Succeeded)
             {
                 string token = await GenerateToken(model.Email);
-                return Ok(new
-                {
-                    success = true,
-                    data = token
-                });
+                return Result(token);
             }
 
-
-            return await Task.FromResult(new JsonResult("Serhat"));
+            NotifyError("Authenticate", result.ToString());
+            return Result(model);
         }
 
         private async Task<string> GenerateToken(string email)

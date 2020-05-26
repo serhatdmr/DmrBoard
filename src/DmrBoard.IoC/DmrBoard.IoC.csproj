@@ -9,6 +9,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\DmrBoard.Application\DmrBoard.Application.csproj" />
     <ProjectReference Include="..\DmrBoard.Core\DmrBoard.Core.csproj" />
     <ProjectReference Include="..\DmrBoard.Domain\DmrBoard.Domain.csproj" />
     <ProjectReference Include="..\DmrBoard.EntityFrameworkCore\DmrBoard.EntityFrameworkCore.csproj" />

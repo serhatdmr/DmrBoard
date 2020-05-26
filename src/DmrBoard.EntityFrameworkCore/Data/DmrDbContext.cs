@@ -2,6 +2,7 @@
 using DmrBoard.Core.Authorization.Users;
 using DmrBoard.Core.Events;
 using DmrBoard.Core.Organizations;
+using DmrBoard.Domain.Boards;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
@@ -14,14 +15,20 @@ namespace DmrBoard.EntityFrameworkCore.Data
         }
         public DbSet<StoredEvent> StoredEvents { get; set; }
         public DbSet<Organization> Organizations { get; set; }
+        public DbSet<Board> Boards { get; set; }
 
-      
         protected override void OnModelCreating(ModelBuilder builder)
         {
             builder.Entity<Organization>(b =>
             {
                 b.Property(k => k.Name).HasMaxLength(100).IsRequired();
             });
+
+            builder.Entity<Board>(b =>
+            {
+                b.Property(k => k.Name).HasMaxLength(100).IsRequired();
+            });
+
 
             builder.Entity<StoredEvent>(b =>
             {
