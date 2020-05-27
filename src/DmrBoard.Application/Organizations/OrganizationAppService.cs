@@ -4,10 +4,13 @@ using DmrBoard.Application.Organizations.Dto;
 using DmrBoard.Core.Bus;
 using DmrBoard.Core.Domain.Interfaces;
 using DmrBoard.Core.Interfaces;
+using DmrBoard.Core.Notifications;
 using DmrBoard.Core.Organizations;
+using DmrBoard.Domain.Organizations;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace DmrBoard.Application.Organizations
 {
@@ -26,13 +29,19 @@ namespace DmrBoard.Application.Organizations
         {
             var list = _organizationRepo.GetAll();
             return Mapper.Map<IEnumerable<OrganizationDto>>(list);
+
         }
 
+        public async Task Create(OrganizationDto dto)
+        {
+            await Mediator.SendCommand(new CreateOrganizationCommand(dto.Name));
+        }
 
-    }
-    public interface IOrganizationAppService
-    {
-        IEnumerable<OrganizationDto> GetAll();
+        public async Task Delete(Guid id)
+        {
+            await Mediator.SendCommand(new DeleteOrganizationCommand(id));
+        }
+
     }
 
 }

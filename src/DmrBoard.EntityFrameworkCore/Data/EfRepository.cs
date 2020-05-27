@@ -17,7 +17,7 @@ namespace DmrBoard.EntityFrameworkCore.Data
             _dbContext = dbContext;
         }
 
-        public T GetById(int id)
+        public T GetById(TPrimaryKey id)
         {
             return _dbContext.Set<T>().Find(id);
         }
@@ -60,12 +60,31 @@ namespace DmrBoard.EntityFrameworkCore.Data
             _dbContext.Entry(entity).State = EntityState.Modified;
         }
 
-        public void Delete(T entity)
+        public void Delete(TPrimaryKey id)
         {
-            _dbContext.Set<T>().Remove(entity);
+            bool isSoftDelete = false;
+            var entry = GetById(id);
+            var entries = _dbContext.ChangeTracker.Entries();
+            foreach (var changedEntity in entries)
+            {
+                if (changedEntity.Entity is ISoftDelete softDeleteEntity)
+                { 
+                    _dbContext.Entry(entry).State = EntityState.Modified;
+                    softDeleteEntity.IsDeleted = true;
+                    isSoftDelete = true;
+                }
+            }
+
+            if (!isSoftDelete)
+                HardDelete(id);
+
+        }
+        public void HardDelete(TPrimaryKey id)
+        {
+            _dbContext.Set<T>().Remove(GetById(id));
         }
 
-        public async Task<T> GetByIdAsync(int id)
+        public async Task<T> GetByIdAsync(TPrimaryKey id)
         {
             return await _dbContext.Set<T>().FindAsync(id);
         }

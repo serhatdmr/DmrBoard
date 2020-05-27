@@ -3,14 +3,16 @@ using System;
 using DmrBoard.EntityFrameworkCore.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace DmrBoard.EntityFrameworkCore.Migrations
 {
     [DbContext(typeof(DmrDbContext))]
-    partial class DmrDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200526124041_UpdateTableOrganization2")]
+    partial class UpdateTableOrganization2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

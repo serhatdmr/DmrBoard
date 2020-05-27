@@ -11,31 +11,31 @@ namespace DmrBoard.Domain.CommandHandlers
 {
     public class CommandHandler
     {
-        private readonly IUnitofWork _unitofWork;
-        private readonly IMediatorHandler _bus;
-        private readonly DomainNotificationHandler _notifications;
+        public readonly IUnitofWork UnitOfWork;
+        public readonly IMediatorHandler Bus;
+        public readonly DomainNotificationHandler Notifications;
 
         public CommandHandler(IUnitofWork uow, IMediatorHandler bus, INotificationHandler<DomainNotification> notifications)
         {
-            _unitofWork = uow;
-            _notifications = (DomainNotificationHandler)notifications;
-            _bus = bus;
+            UnitOfWork = uow;
+            Notifications = (DomainNotificationHandler)notifications;
+            Bus = bus;
         }
 
         protected void NotifyValidationErrors(Command message)
         {
             foreach (var error in message.ValidationResult.Errors)
             {
-                 _bus.RaiseEvent(new DomainNotification(message.MessageType, error.ErrorMessage));
+                Bus.RaiseEvent(new DomainNotification(message.MessageType, error.ErrorMessage));
             }
         }
 
         public bool Commit()
         {
-            if (_notifications.HasNotifications()) return false;
-            if (_unitofWork.Commit()) return true;
+            if (Notifications.HasNotifications()) return false;
+            if (UnitOfWork.Commit()) return true;
 
-            _bus.RaiseEvent(new DomainNotification("Commit", "We had a problem during saving your data."));
+            Bus.RaiseEvent(new DomainNotification("Commit", "We had a problem during saving your data."));
             return false;
         }
     }

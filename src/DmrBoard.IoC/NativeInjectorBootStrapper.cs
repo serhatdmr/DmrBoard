@@ -5,6 +5,8 @@ using DmrBoard.Core.Events;
 using DmrBoard.Core.Interfaces;
 using DmrBoard.Core.Notifications;
 using DmrBoard.Domain.Authorization.Users;
+using DmrBoard.Domain.Boards;
+using DmrBoard.Domain.Boards.Commands;
 using DmrBoard.Domain.Bus;
 using DmrBoard.Domain.EventStore;
 using DmrBoard.Domain.Organizations;
@@ -28,7 +30,8 @@ namespace DmrBoard.IoC
             services.AddScoped<IEventStore, EventStoreManager>();
             // Domain - Commands
             services.AddScoped<IRequestHandler<CreateOrganizationCommand, bool>, OrganizationCommandHandler>();
-
+            services.AddScoped<IRequestHandler<DeleteOrganizationCommand, bool>, OrganizationCommandHandler>();
+            services.AddScoped<IRequestHandler<DeleteBoardCommand, bool>, BoardCommandHandler>();
 
             services.AddScoped(typeof(IRepository<,>), typeof(EfRepository<,>));
             services.AddScoped<IUnitofWork, UnitOfWork>();

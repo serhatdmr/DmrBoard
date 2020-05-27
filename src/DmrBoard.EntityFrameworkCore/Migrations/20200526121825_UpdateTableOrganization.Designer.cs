@@ -3,14 +3,16 @@ using System;
 using DmrBoard.EntityFrameworkCore.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace DmrBoard.EntityFrameworkCore.Migrations
 {
     [DbContext(typeof(DmrDbContext))]
-    partial class DmrDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200526121825_UpdateTableOrganization")]
+    partial class UpdateTableOrganization
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -174,15 +176,6 @@ namespace DmrBoard.EntityFrameworkCore.Migrations
                         .HasColumnType("TEXT");
 
                     b.Property<int?>("CreatorUserId")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int?>("DeleterUserId")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<DateTime?>("DeletionTime")
-                        .HasColumnType("TEXT");
-
-                    b.Property<bool>("IsDeleted")
                         .HasColumnType("INTEGER");
 
                     b.Property<DateTime?>("LastModificationTime")

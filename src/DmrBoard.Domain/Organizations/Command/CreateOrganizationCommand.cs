@@ -1,7 +1,4 @@
 ﻿using DmrBoard.Domain.Organizations.Validations;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace DmrBoard.Domain.Organizations
 {

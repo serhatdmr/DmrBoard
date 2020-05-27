@@ -18,7 +18,7 @@ namespace DmrBoard.Web.Host.Controllers.Authorization
 {
     [ApiController]
     [ApiVersion("1.0")]
-    [Route("api/{v:apiVersion}[controller]")]
+    [Route("api/{v:apiVersion}/[controller]")]
     public class TokenAuthController : BaseController
     {
         private readonly SignInManager<User> _signInManager;
