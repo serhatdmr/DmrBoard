@@ -20,9 +20,9 @@ namespace DmrBoard.EntityFrameworkCore.Data
 {
     public class DmrDbContext : IdentityDbContext<User, Role, int>
     {
-        private readonly IUserSession _userSession;
+        private readonly ICurrentUserService _userSession;
         private readonly ILogger _logger;
-        public DmrDbContext(DbContextOptions options, IUserSession userSession, ILogger<DmrDbContext> logger) : base(options)
+        public DmrDbContext(DbContextOptions options, ICurrentUserService userSession, ILogger<DmrDbContext> logger) : base(options)
         {
             _userSession = userSession;
             _logger = logger;

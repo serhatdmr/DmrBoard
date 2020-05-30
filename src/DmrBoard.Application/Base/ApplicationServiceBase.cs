@@ -9,9 +9,9 @@ namespace DmrBoard.Application.Base
     {
         public readonly IMediatorHandler Mediator;
         public readonly IMapper Mapper;
-        public readonly IUserSession UserSession;
+        public readonly ICurrentUserService UserSession;
 
-        public ApplicationServiceBase(IMediatorHandler mediator, IMapper mapper, IUserSession userSession)
+        public ApplicationServiceBase(IMediatorHandler mediator, IMapper mapper, ICurrentUserService userSession)
         {
             Mediator = mediator;
             Mapper = mapper;

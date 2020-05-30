@@ -18,7 +18,7 @@ namespace DmrBoard.Application.Organizations
     {
         private readonly IRepository<Organization, Guid> _organizationRepo;
 
-        public OrganizationAppService(IMediatorHandler mediator, IMapper mapper, IUserSession userSession,
+        public OrganizationAppService(IMediatorHandler mediator, IMapper mapper, ICurrentUserService userSession,
             IRepository<Organization, Guid> organizationRepo) : base(mediator, mapper, userSession)
         {
             _organizationRepo = organizationRepo;

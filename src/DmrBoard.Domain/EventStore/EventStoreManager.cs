@@ -8,9 +8,9 @@ namespace DmrBoard.Domain.EventStore
     public class EventStoreManager : IEventStore
     {
         private readonly IEventStoreRepository _eventStoreRepository;
-        private readonly IUserSession _userSession;
+        private readonly ICurrentUserService _userSession;
         public EventStoreManager(IEventStoreRepository eventStoreRepository,
-            IUserSession userSession)
+            ICurrentUserService userSession)
         {
             _eventStoreRepository = eventStoreRepository;
             _userSession = userSession;

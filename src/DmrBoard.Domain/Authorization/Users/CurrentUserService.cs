@@ -1,17 +1,14 @@
 ﻿using DmrBoard.Core.Interfaces;
 using Microsoft.AspNetCore.Http;
-using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
-using System.Text;
 
 namespace DmrBoard.Domain.Authorization.Users
 {
-    public class UserSession : IUserSession
+    public class CurrentUserService : ICurrentUserService
     {
         private readonly IHttpContextAccessor _httpContextAccessor;
-        public UserSession(IHttpContextAccessor httpContextAccessor)
+        public CurrentUserService(IHttpContextAccessor httpContextAccessor)
         {
             _httpContextAccessor = httpContextAccessor;
         }

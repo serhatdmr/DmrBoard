@@ -39,7 +39,7 @@ namespace DmrBoard.IoC
 
             services.AddScoped<IEventStoreRepository, EventStoreRepository>();
 
-            services.AddScoped<IUserSession, UserSession>();
+            services.AddScoped<ICurrentUserService, CurrentUserService>();
 
 
             #region AppService
