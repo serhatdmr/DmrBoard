@@ -1,6 +1,7 @@
 ﻿using DmrBoard.Core.Domain.Entities;
 using DmrBoard.Core.Domain.Interfaces;
 using DmrBoard.Core.Domain.Specifications;
+using DmrBoard.Core.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
@@ -49,7 +50,24 @@ namespace DmrBoard.EntityFrameworkCore.Data
                 .Where(spec.Criteria)
                 .AsEnumerable();
         }
+        //public IEnumerable<T> Get(ISpecification<T> spec, IPagedResultRequest pagedResultRequest)
+        //{
+        //    // fetch a Queryable that includes all expression-based includes
+        //    var queryableResultWithIncludes = spec.Includes
+        //        .Aggregate(_dbContext.Set<T>().AsQueryable(),
+        //            (current, include) => current.Include(include));
 
+        //    // modify the IQueryable to include any string-based include statements
+        //    var secondaryResult = spec.IncludeStrings
+        //        .Aggregate(queryableResultWithIncludes,
+        //            (current, include) => current.Include(include));
+
+        //    // return the result of the query using the specification's criteria expression
+        //    return secondaryResult
+        //        .
+        //        .Where(spec.Criteria)
+        //        .AsEnumerable();
+        //}
         public T Add(T entity)
         {
             _dbContext.Set<T>().Add(entity);
@@ -68,7 +86,7 @@ namespace DmrBoard.EntityFrameworkCore.Data
             foreach (var changedEntity in entries)
             {
                 if (changedEntity.Entity is ISoftDelete softDeleteEntity)
-                { 
+                {
                     _dbContext.Entry(entry).State = EntityState.Modified;
                     softDeleteEntity.IsDeleted = true;
                     isSoftDelete = true;

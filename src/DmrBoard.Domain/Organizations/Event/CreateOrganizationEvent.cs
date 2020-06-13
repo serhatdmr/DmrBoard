@@ -12,6 +12,7 @@ namespace DmrBoard.Domain.Organizations
         {
             Id = id;
             Name = name;
+            AggregateId = id;
         }
     }
 }

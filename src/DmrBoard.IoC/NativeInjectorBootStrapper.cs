@@ -4,6 +4,7 @@ using DmrBoard.Core.Domain.Interfaces;
 using DmrBoard.Core.Events;
 using DmrBoard.Core.Interfaces;
 using DmrBoard.Core.Notifications;
+using DmrBoard.Domain.AuditLogs;
 using DmrBoard.Domain.Authorization.Users;
 using DmrBoard.Domain.Boards;
 using DmrBoard.Domain.Boards.Commands;
@@ -21,9 +22,12 @@ namespace DmrBoard.IoC
     {
 
         public static void RegisterServices(IServiceCollection services)
-        {
+        { 
+
             // Domain Bus (Mediator)
             services.AddScoped<IMediatorHandler, InMemoryBus>();
+            services.AddScoped(typeof(IPipelineBehavior<,>), typeof(LoggingBehavior<,>));
+
 
             // Domain - Events
             services.AddScoped<INotificationHandler<DomainNotification>, DomainNotificationHandler>();

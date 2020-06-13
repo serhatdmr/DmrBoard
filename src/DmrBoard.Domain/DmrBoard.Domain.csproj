@@ -8,4 +8,8 @@
     <ProjectReference Include="..\DmrBoard.Core\DmrBoard.Core.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Specifications\" />
+  </ItemGroup>
+
 </Project>

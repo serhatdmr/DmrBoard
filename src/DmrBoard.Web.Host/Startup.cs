@@ -12,6 +12,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using System.Reflection;
 
 namespace DmrBoard.Web.Host
 {
@@ -32,9 +33,9 @@ namespace DmrBoard.Web.Host
             services.AddEntityFrameworkSqlite();
             services.AddDbContext<DmrDbContext>(c => c.UseSqlite("Data Source=sqlitedemo.db"));
             services.AddIdentitySetup(Configuration);
+            services.AddMediatR(Assembly.GetExecutingAssembly());
 
             services.AddDependencyInjectionSetup();
-            services.AddMediatR(typeof(Startup));
             services.AddHttpContextAccessor();
 
             services.AddSwaggerSetup();
