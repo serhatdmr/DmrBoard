@@ -6,6 +6,7 @@ using DmrBoard.Core.Interfaces;
 using DmrBoard.Core.Organizations;
 using DmrBoard.Domain.Boards;
 using DmrBoard.EntityFrameworkCore.Util;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
@@ -20,10 +21,15 @@ namespace DmrBoard.EntityFrameworkCore.Data
 {
     public class DmrDbContext : IdentityDbContext<User, Role, int>
     {
+        private readonly IHttpContextAccessor _httpContextAccessor;
         private readonly ICurrentUserService _userSession;
         private readonly ILogger _logger;
-        public DmrDbContext(DbContextOptions options, ICurrentUserService userSession, ILogger<DmrDbContext> logger) : base(options)
+
+        public DmrDbContext(DbContextOptions options,
+            IHttpContextAccessor httpContextAccessor,
+            ICurrentUserService userSession, ILogger<DmrDbContext> logger) : base(options)
         {
+            _httpContextAccessor = httpContextAccessor;
             _userSession = userSession;
             _logger = logger;
         }
@@ -76,19 +82,19 @@ namespace DmrBoard.EntityFrameworkCore.Data
             //    }
             //}
         }
-  //      private void SetQueryFilterOnAllEntities<TEntityInterface>(
-  //this ModelBuilder builder,
-  //Expression<Func<TEntityInterface, bool>> filterExpression)
-  //      {
-  //          foreach (var type in builder.Model.GetEntityTypes()
-  //            .Where(t => t.BaseType == null)
-  //            .Select(t => t.ClrType)
-  //            .Where(t => typeof(TEntityInterface).IsAssignableFrom(t)))
-  //          {
-             
-  //          }
-  //      }
-    
+        //      private void SetQueryFilterOnAllEntities<TEntityInterface>(
+        //this ModelBuilder builder,
+        //Expression<Func<TEntityInterface, bool>> filterExpression)
+        //      {
+        //          foreach (var type in builder.Model.GetEntityTypes()
+        //            .Where(t => t.BaseType == null)
+        //            .Select(t => t.ClrType)
+        //            .Where(t => typeof(TEntityInterface).IsAssignableFrom(t)))
+        //          {
+
+        //          }
+        //      }
+
 
         public override int SaveChanges()
         {

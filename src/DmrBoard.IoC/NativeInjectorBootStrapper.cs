@@ -9,11 +9,13 @@ using DmrBoard.Domain.Authorization.Users;
 using DmrBoard.Domain.Boards;
 using DmrBoard.Domain.Boards.Commands;
 using DmrBoard.Domain.Bus;
+using DmrBoard.Domain.Cache;
 using DmrBoard.Domain.EventStore;
 using DmrBoard.Domain.Organizations;
 using DmrBoard.EntityFrameworkCore.Data;
 using DmrBoard.EntityFrameworkCore.Data.Repositories;
 using MediatR;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace DmrBoard.IoC
@@ -22,12 +24,14 @@ namespace DmrBoard.IoC
     {
 
         public static void RegisterServices(IServiceCollection services)
-        { 
+        {
+
+            // Cache manager
+            services.AddSingleton<ICacheManager, CacheManager>();
 
             // Domain Bus (Mediator)
             services.AddScoped<IMediatorHandler, InMemoryBus>();
             services.AddScoped(typeof(IPipelineBehavior<,>), typeof(LoggingBehavior<,>));
-
 
             // Domain - Events
             services.AddScoped<INotificationHandler<DomainNotification>, DomainNotificationHandler>();

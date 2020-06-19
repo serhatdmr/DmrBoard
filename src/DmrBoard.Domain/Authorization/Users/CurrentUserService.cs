@@ -28,8 +28,11 @@ namespace DmrBoard.Domain.Authorization.Users
 
         private string GetUserId()
         {
-            return _httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            if (_httpContextAccessor.HttpContext != null)
+                return _httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            else
+                return null;
         }
-    
+
     }
 }

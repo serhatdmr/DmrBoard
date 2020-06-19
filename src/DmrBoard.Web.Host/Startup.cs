@@ -1,5 +1,6 @@
 using AutoMapper;
 using DmrBoard.Application.Mapper;
+using DmrBoard.Core.Interfaces;
 using DmrBoard.EntityFrameworkCore.Data;
 using DmrBoard.EntityFrameworkCore.Data.SeedHelpers;
 using DmrBoard.Web.Host.Configurations;
@@ -28,7 +29,7 @@ namespace DmrBoard.Web.Host
         public void ConfigureServices(IServiceCollection services)
         {
 
-            services.AddControllers();
+            services.AddControllers(); 
 
             services.AddEntityFrameworkSqlite();
             services.AddDbContext<DmrDbContext>(c => c.UseSqlite("Data Source=sqlitedemo.db"));
@@ -47,6 +48,7 @@ namespace DmrBoard.Web.Host
                 x.AssumeDefaultVersionWhenUnspecified = true;
                 x.ReportApiVersions = true;
             });
+
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
