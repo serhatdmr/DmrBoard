@@ -1,15 +1,16 @@
 ﻿using DmrBoard.Core.Domain.Entities;
 using DmrBoard.Core.Domain.Specifications;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace DmrBoard.Core.Domain.Interfaces
 {
     public interface IRepository<T, TPrimaryKey> where T : Entity<TPrimaryKey>
     {
-
+        IQueryable<T> GetAll();
         T GetById(TPrimaryKey id);
-        IEnumerable<T> GetAll();
+        IEnumerable<T> GetAllList();
         T Add(T entity);
         void Update(T entity);
         void Delete(TPrimaryKey id);

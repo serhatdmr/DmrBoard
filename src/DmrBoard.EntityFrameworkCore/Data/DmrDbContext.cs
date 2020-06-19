@@ -110,56 +110,59 @@ namespace DmrBoard.EntityFrameworkCore.Data
         private void ChangedEntityAuditedSet()
         {
             var entries = this.ChangeTracker.Entries().Where(e => e.State == EntityState.Added || e.State == EntityState.Modified);
-            var now = DateTime.Now;
-            int? userId = null;
-            try
+            if (entries.Any())
             {
-                if (_userSession?.UserId != null)
-                    userId = int.Parse(_userSession.UserId);
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, "ChangedEntityAuditedSet");
-            }
-
-
-
-            foreach (var changedEntity in entries)
-            {
-                if (changedEntity.Entity is IAuditedEntity entity)
+                var now = DateTime.Now;
+                int? userId = null;
+                try
                 {
-                    switch (changedEntity.State)
-                    {
-                        case EntityState.Added:
-                            entity.CreationTime = DateTime.Now;
-                            entity.CreatorUserId = userId;
-                            break;
-
-                        case EntityState.Modified:
-                            entity.LastModificationTime = now;
-                            entity.LastModifierUserId = userId;
-                            break;
-                    }
+                    if (_userSession?.UserId != null)
+                        userId = int.Parse(_userSession.UserId);
+                }
+                catch (Exception ex)
+                {
+                    _logger.LogError(ex, "ChangedEntityAuditedSet");
                 }
 
-                if (changedEntity.Entity is ISoftDelete softDeleteEntity)
+
+
+                foreach (var changedEntity in entries)
                 {
-                    switch (changedEntity.State)
+                    if (changedEntity.Entity is IAuditedEntity entity)
                     {
-                        case EntityState.Modified:
-                            if (softDeleteEntity.IsDeleted)
-                            {
-                                if (changedEntity.Entity is IHasDeletionAudited entityDeletion)
+                        switch (changedEntity.State)
+                        {
+                            case EntityState.Added:
+                                entity.CreationTime = DateTime.Now;
+                                entity.CreatorUserId = userId;
+                                break;
+
+                            case EntityState.Modified:
+                                entity.LastModificationTime = now;
+                                entity.LastModifierUserId = userId;
+                                break;
+                        }
+                    }
+
+                    if (changedEntity.Entity is ISoftDelete softDeleteEntity)
+                    {
+                        switch (changedEntity.State)
+                        {
+                            case EntityState.Modified:
+                                if (softDeleteEntity.IsDeleted)
                                 {
-                                    entityDeletion.DeletionTime = DateTime.Now;
-                                    entityDeletion.DeleterUserId = userId;
+                                    if (changedEntity.Entity is IHasDeletionAudited entityDeletion)
+                                    {
+                                        entityDeletion.DeletionTime = DateTime.Now;
+                                        entityDeletion.DeleterUserId = userId;
+                                    }
                                 }
-                            }
-                            break;
+                                break;
+                        }
                     }
-                }
 
-            }
+                }
+            } 
         }
     }
 }

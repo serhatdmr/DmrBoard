@@ -4,7 +4,7 @@ namespace DmrBoard.Core.Entities
 {
     public interface IPagedResult<T>
     {
-        public IReadOnlyList<T> Data { get; set; }
-        public int TotalCount { get; set; }
+        public IReadOnlyList<T> Items { get;  }
+        public int TotalCount { get; }
     }
 }

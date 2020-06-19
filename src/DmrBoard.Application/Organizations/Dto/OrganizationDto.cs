@@ -9,5 +9,6 @@ namespace DmrBoard.Application.Organizations.Dto
         [Required]
         [StringLength(100)]
         public string Name { get; set; }
+         
     }
 }

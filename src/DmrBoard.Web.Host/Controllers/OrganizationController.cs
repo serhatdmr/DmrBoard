@@ -30,10 +30,21 @@ namespace DmrBoard.Web.Host.Controllers
         }
 
         [HttpGet]
-        public IActionResult GetAll()
+        public IActionResult GetAll([FromQuery]GetAllInput input)
         {
-            var list = _organizationAppService.GetAll();
+            var list = _organizationAppService.GetAll(input);
             return Result(list);
+        }
+
+        [HttpGet]
+        [Route("{id}")]
+        public IActionResult Get(Guid id)
+        {
+            var res = _organizationAppService.GetById(id);
+            if (res == null)
+                return NotFound();
+
+            return Result(res);
         }
 
         [HttpPost]

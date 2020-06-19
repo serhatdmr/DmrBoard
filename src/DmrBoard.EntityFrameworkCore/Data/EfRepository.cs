@@ -17,6 +17,10 @@ namespace DmrBoard.EntityFrameworkCore.Data
         {
             _dbContext = dbContext;
         }
+        public IQueryable<T> GetAll()
+        {
+            return _dbContext.Set<T>().AsQueryable();
+        }
 
         public T GetById(TPrimaryKey id)
         {
@@ -28,10 +32,12 @@ namespace DmrBoard.EntityFrameworkCore.Data
             return Get(spec).FirstOrDefault();
         }
 
-        public IEnumerable<T> GetAll()
+        public IEnumerable<T> GetAllList()
         {
             return _dbContext.Set<T>().AsEnumerable();
         }
+
+
 
         public IEnumerable<T> Get(ISpecification<T> spec)
         {

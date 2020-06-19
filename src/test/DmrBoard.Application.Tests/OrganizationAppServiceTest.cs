@@ -42,7 +42,7 @@ namespace DmrBoard.Application.Tests
                 new Organization{  Name="1. Organizasyon",Id=Guid.NewGuid()},
                 new Organization { Name="2. Organizasyon",Id=Guid.NewGuid()}
             };
-            mockOrganizationRepo.Setup(s => s.GetAll()).Returns(organizations);
+            mockOrganizationRepo.Setup(s => s.GetAll()).Returns(organizations.AsQueryable());
 
 
             _organizationAppService = new OrganizationAppService(mockMediatorHandler.Object, mapper,
@@ -51,8 +51,8 @@ mockCurrentUserService.Object, mockOrganizationRepo.Object);
         [Fact]
         public void Should_All_Organizations()
         {
-            var data = _organizationAppService.GetAll().ToList();
-            Assert.Equal(2, data.Count);
+            var data = _organizationAppService.GetAll(new GetAllInput());
+            Assert.Equal(2, data.TotalCount);
         }
 
     }
